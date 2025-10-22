@@ -23,6 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
+api/ 
+.vercel
+
 .env
 
 server/config/hackathongai-firebase-adminsdk-fbsvc-c23b9c4716.json
+.vercel
