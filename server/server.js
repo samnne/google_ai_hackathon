@@ -1,11 +1,11 @@
-import express, { json } from "express";
-import cors from "cors";
-import session from "express-session";
 import dotenv from "dotenv";
-import { db } from "./config/firebase-config.js";
 if (process.env.NODE_ENV !== "production") {
   dotenv.config();
 }
+import express, { json } from "express";
+import cors from "cors";
+import session from "express-session";
+import { db } from "./config/firebase-config.js";
 const PORT = 3000;
 
 const app = express();
