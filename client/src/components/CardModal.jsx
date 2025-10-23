@@ -16,7 +16,7 @@ const CardModal = ({ setState, cardData, modalRef, overlayRef }) => {
       <div
        
         ref={modalRef}
-        className="absolute gap-2 dark:text-white  overflow-y-auto overflow-x-hidden flex flex-col  opacity-0 p-5 duration-300 transform -0 transition-all inset-0  -z-10 dark:bg-gray-900 bg-white shadow-lg min-sm:w-1/2 translate-x-1/5 w-3/4 h-1/2 rounded-2xl translate-y-1/4 min-sm:translate-1/2  "
+        className="absolute gap-2 dark:text-white  overflow-y-auto overflow-x-hidden flex flex-col  opacity-0 p-5 duration-300 transform -0 transition-all inset-0  -z-10 dark:bg-gray-900 bg-white shadow-lg sm:w-1/2 translate-x-1/5 w-3/4 h-1/2 rounded-2xl translate-y-1/4 sm:translate-1/2  "
       >
         <div className="flex flex-col ">
           <div className="absolute flex justify-center text-center items-center right-2 top-1">

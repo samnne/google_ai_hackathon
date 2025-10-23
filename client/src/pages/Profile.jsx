@@ -310,7 +310,7 @@ const Profile = () => {
                   : "Welcome Back!"}{" "}
               </h1>
             </header>
-            <section className="  gap-15   grid grid-cols-3 max-sm:grid-cols-1 min-sm:grid-rows-1">
+            <section className="  gap-15   grid grid-cols-3 max-sm:grid-cols-1 sm:grid-rows-1">
               {globalCardList.map((r) => {
                 return (
                   <Link
@@ -322,7 +322,7 @@ const Profile = () => {
                 );
               })}
             </section>
-            <section className="min-sm:p-5 p-2 mt-5 w-full shadow-lg h-96 rounded-2xl text-yellow-500 dark:bg-gray-800 bg-white">
+            <section className="sm:p-5 p-2 mt-5 w-full shadow-lg h-96 rounded-2xl text-yellow-500 dark:bg-gray-800 bg-white">
               <div className="flex justify-between max-sm:p-4">
                 <header className="flex gap-2 ">
                   <div className="max-sm:hidden">

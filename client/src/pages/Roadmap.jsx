@@ -277,7 +277,7 @@ const Roadmap = () => {
               }
               setServerData((prev) => ({ ...prev, success: !prev.success }));
             }}
-            className="absolute flex justify-center items-center rounded-2xl shadow-lg shadow-gray-800  left-1/2 top-1/2 transform -translate-1/2 text-4xl bg-green-500 p-20 cursor-pointer transition-all hover:scale-125 z-[1000]"
+            className="absolute flex justify-center items-center rounded-2xl shadow-lg shadow-gray-800  left-1/2 top-1/2 transform -translate-1/2 text-4xl bg-green-500 p-20 cursor-pointer transition-all hover:scale-125 z-1000"
           >
             <span className="text-white">{serverData?.message}</span>
           </div>

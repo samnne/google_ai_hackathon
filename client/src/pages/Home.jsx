@@ -94,7 +94,7 @@ const Home = () => {
       </h1>
       <form
         onSubmit={(e) => initialPrompt(e)}
-        className="dark:bg-black dark:text-white dark:shadow-gray-900 bg-white font-noto font-bold shadow-lg h-20 gap-5 rounded-3xl min-sm:w-96  flex items-center p-5"
+        className="dark:bg-black dark:text-white dark:shadow-gray-900 bg-white font-noto font-bold shadow-lg h-20 gap-5 rounded-3xl sm:w-96  flex items-center p-5"
       >
         <input
           type="text"

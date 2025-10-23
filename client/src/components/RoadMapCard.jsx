@@ -87,7 +87,7 @@ const RoadMapCard = ({
           }
           ${isDragging ? "cursor-move" : "cursor-default"} ${
           isSelected ? "shadow-green-400 animate-pulse" : ""
-        } flex  flex-col  dark:text-gray-200 font-semibold  min-sm:absolute  shadow-lg dark:shadow-gray-800 rounded-2xl w-80 h-auto `}
+        } flex  flex-col  dark:text-gray-200 font-semibold  sm:absolute  shadow-lg dark:shadow-gray-800 rounded-2xl w-80 h-auto `}
         style={{
           left: position?.x,
           top: position?.y,

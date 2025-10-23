@@ -137,7 +137,7 @@ const Roadmaps = () => {
         {globalCardList.map((r) => {
           return (
             <div
-              className=" max-sm:w-70 hover:drop-shadow-yellow-400 drop-shadow-xl drop-shadow-gray-900 transition-all duration-200 max-sm:h-70 min-sm:w-80 h-80 relative flex-col flex   dark:bg-gray-800 dark:shadow-gray-800  justify-self-center rounded-2xl p-5 "
+              className=" max-sm:w-70 hover:drop-shadow-yellow-400 drop-shadow-xl drop-shadow-gray-900 transition-all duration-200 max-sm:h-70 sm:w-80 h-80 relative flex-col flex   dark:bg-gray-800 dark:shadow-gray-800  justify-self-center rounded-2xl p-5 "
               key={r._id}
             >
               <div className="w-full h-fit gap-2 flex items-center justify-between">
@@ -208,7 +208,7 @@ const Roadmaps = () => {
 
         <button
           onClick={saveRoadMap}
-          className="fixed min-sm:bottom-20 bottom-5 right-5 min-sm:right-20 hover:scale-110 font-bold tracking-widest hover:cursor-pointer primary-button"
+          className="fixed sm:bottom-20 bottom-5 right-5 sm:right-20 hover:scale-110 font-bold tracking-widest hover:cursor-pointer primary-button"
         >
           Save
         </button>
