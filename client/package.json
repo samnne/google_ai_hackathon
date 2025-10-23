@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "homepage": "https://samnne.github.io/google_ai_hackathon/",
+  "homepage": "https://samnne.github.io/google_ai_hackathon",
 
   "scripts": {
     "dev": "vite",
