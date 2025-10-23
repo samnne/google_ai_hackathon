@@ -10,6 +10,7 @@ import { FaCheck, FaPencilAlt, FaTimes } from "react-icons/fa";
 import { createCard } from "../reducers/rootSlice";
 import { initalName, saveAllRM, saveToDB } from "../utils/utils";
 import { auth } from "../../config/firebase-config";
+import { API_URL } from "../utils/constants";
 
 const Roadmaps = () => {
   const globalCardList = useSelector((state) => state.cardList.value);
@@ -23,7 +24,7 @@ const Roadmaps = () => {
 
   const fetchData = useCallback(async () => {
     const response = await fetch(
-      `http://localhost:3000/api/user/map/${cUser?.uid}`,
+      `${API_URL}/api/user/map/${cUser?.uid}`,
       { method: "get" }
     );
     const data = await response.json();
@@ -108,7 +109,7 @@ const Roadmaps = () => {
 
     if (cUser?.uid && copiedObj.length > 0) {
       const data = await fetch(
-        `http://localhost:3000/api/user/roadmaps/${findMap?._id}`,
+        `${API_URL}/${findMap?._id}`,
         {
           method: "post",
           headers: { "Content-Type": "application/json" },

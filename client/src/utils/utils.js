@@ -157,7 +157,7 @@ export async function saveToDB(cardGraph, currentUser, globalCardList) {
 
 
     if (currentUser?.uid && copiedObj) {
-      const data = await fetch("http://localhost:3000/api/user/createMap", {
+      const data = await fetch(`${API_URL}/api/user/createMap`, {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ copiedObj }),
@@ -175,7 +175,7 @@ export async function saveToDB(cardGraph, currentUser, globalCardList) {
     console.log(copiedObj);
 
     if (currentUser?.uid && copiedObj.length > 0) {
-      const data = await fetch("http://localhost:3000/api/user/roadmaps", {
+      const data = await fetch(`${API_URL}/api/user/roadmaps`, {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ copiedObj: copiedObj }),

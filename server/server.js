@@ -13,7 +13,9 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://google-ai-hackathon.onrender.com",
+      process.env.BACKEND_URL,
+      process.env.FRONTEND_URL
+
     ],
     methods: ["GET", "POST"],
   })
