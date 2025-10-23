@@ -6,12 +6,12 @@ const navLinks = [
   {
     id: "Roadmap",
     title: "Roadmap",
-    link: "/roadmap",
+    link: "/google_ai_hackathon/roadmap",
   },
   {
     id: "Profile",
     title: "Profile",
-    link: "/profile",
+    link: "/google_ai_hackathon/profile",
   },
 ];
 

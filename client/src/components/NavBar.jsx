@@ -12,7 +12,7 @@ import { createCard } from "../reducers/rootSlice";
 const logo = {
   id: "Home",
   title: "Home",
-  link: "/",
+  link: "/google_ai_hackathon/",
   image: "./uPathLogo.png",
 };
 
@@ -29,7 +29,7 @@ const NavBar = () => {
         dispatch(setUser(null));
         dispatch(updateList([]));
         dispatch(createCard([]));
-        navigate("/profile");
+        navigate("/google_ai_hackathon/profile");
       })
       .catch((e) => {
         console.log("FAIL SIGN", e);

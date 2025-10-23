@@ -18,10 +18,10 @@ createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <NavBar></NavBar>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/roadmap" element={<Roadmaps />} />
-          <Route path="/roadmap/:_id" element={<Roadmap />} />
+          <Route path="/google_ai_hackathon" element={<Home />} />
+          <Route path="/google_ai_hackathon/profile" element={<Profile />} />
+          <Route path="/google_ai_hackathon/roadmap" element={<Roadmaps />} />
+          <Route path="/google_ai_hackathon/roadmap/:_id" element={<Roadmap />} />
         </Routes>
       </BrowserRouter>
     </Provider>

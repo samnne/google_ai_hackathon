@@ -51,85 +51,82 @@ export const schema = () => {
 
 export class AIClient {
   constructor(language = "en") {
-    this.language = language; // "en", "es", or "ja"
+    this.language = language;
     this.session = null;
+    this.available = false;
   }
 
   async init() {
-    const availability = await LanguageModel.availability();
+    try {
+      const availability = await LanguageModel.availability();
 
-    if (availability === "unavailable") {
-      throw new Error("Language model unavailable on this device.");
+      if (availability === "unavailable") {
+        console.warn("⚠️ Language model unavailable on this device.");
+        this.available = false;
+        return;
+      }
+
+      this.session = await LanguageModel.create({
+        initialPrompts: [
+          {
+            role: "system",
+            content:
+              "You are a helpful assistant. You have knowledge on all the skills and hobbies and jobs in the world and want to teach everyone about it in a step-by-step process returned as valid JSON.",
+          },
+        ],
+        expectedInputs: [{ type: "text" }],
+        expectedOutputs: [{ type: "text" }],
+        topK: 2,
+        temperature: 1,
+        output: { language: this.language },
+      });
+
+      this.available = true;
+      console.log("✅ AIClient initialized successfully.");
+    } catch (error) {
+      console.error("❌ Failed to initialize AIClient:", error);
+      this.available = false;
     }
-
-    this.session = await LanguageModel.create({
-      initialPrompts: [
-        {
-          role: "system",
-          content:
-            "You are a helpful assistant. You are have knowledge on all the skills and hobbies and jobs in the world and want to teach everyone about it in a step by step process returned as valid JSON.",
-        },
-      ],
-      expectedInputs: [{ type: "text" }],
-      expectedOutputs: [{ type: "text" }],
-      topK: 2,
-      temperature: 1,
-      output: { language: this.language },
-    });
-
-    return this.session;
   }
 
   async prompt(text) {
-    if (!this.session) {
-      await this.init();
+    if (!this.available || !this.session) {
+      console.warn("⚠️ AIClient unavailable — returning fallback response.");
+      return { error: "AIClient unavailable", result: null };
     }
+
     const s = schema();
-
-    return await this.session.prompt(text, {
-      responseConstraint: s,
-      omitResponseConstraintInput: true,
-      output: { language: this.language },
-    });
-  }
-
-  async promptStreaming(text) {
-    if (!this.session) {
-      await this.init();
-    }
-
-    const stream = this.session.promptStreaming(
-      [
-        {
-          role: "user",
-          content: [{ type: "text", value: text }],
-        },
-      ],
-      {
-        responseConstraint: schema(),
+    try {
+      const result = await this.session.prompt(text, {
+        responseConstraint: s,
         omitResponseConstraintInput: true,
         output: { language: this.language },
-      }
-    );
-
-    return stream;
+      });
+      return result;
+    } catch (error) {
+      console.error("⚠️ AIClient prompt error:", error);
+      return { error: "AIClient prompt failed", result: null };
+    }
   }
 
   destroy() {
     if (this.session) {
       this.session.destroy();
       this.session = null;
+      this.available = false;
     }
   }
 }
 
+
 const client = new AIClient("en");
 try {
   await client.init();
-
   //console.log(JSON.parse(res), "######################");
 } catch (e) {
   console.log(e);
+  
 }
-
 export { client };
+
+

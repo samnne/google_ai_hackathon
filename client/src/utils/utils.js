@@ -106,13 +106,17 @@ const init = JSON.parse(localStorage.getItem("roadmap"))
   ? JSON.parse(localStorage.getItem("roadmap"))
   : [];
 
-  console.log(API_URL)
+console.log(API_URL);
 const fetchData = async () => {
-  const res = await fetch(
-    `${API_URL}/api/user/getMap/${auth.currentUser?.uid}`
-  );
+  try {
+    const res = await fetch(
+      `${API_URL}/api/user/getMap/${auth.currentUser?.uid}`
+    );
 
-  return res.json();
+    return res.json();
+  } catch (e) {
+    return {data: []};
+  }
 };
 
 const transformRoadmap = (roadmap) => {
@@ -154,7 +158,6 @@ export async function saveToDB(cardGraph, currentUser, globalCardList) {
       uid: currentUser?.uid || cardGraph.uid,
       nodesMap: JSON.stringify({ ...copiedObj.nodesMap }),
     };
-
 
     if (currentUser?.uid && copiedObj) {
       const data = await fetch(`${API_URL}/api/user/createMap`, {
