@@ -1,9 +1,9 @@
 import { initializeApp, cert, getApps } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { getAuth } from "firebase-admin/auth";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 if (process.env.NODE_ENV !== "production") {
-  dotenv.config()
+  dotenv.config();
 }
 
 if (getApps().length === 0) {
@@ -27,7 +27,7 @@ if (getApps().length === 0) {
       databaseURL: process.env.FIREBASE_DATABASE_URL,
     });
   } else {
-       initializeApp({
+    initializeApp({
       credential: cert({
         projectId: `${process.env.FIREBASE_PROJECT_ID}`,
         clientEmail: `${process.env.FIREBASE_CLIENT_EMAIL}`,

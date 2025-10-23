@@ -28,5 +28,8 @@ api/
 
 .env
 
+*.env 
+
+
 server/config/hackathongai-firebase-adminsdk-fbsvc-c23b9c4716.json
 .vercel

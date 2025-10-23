@@ -14,6 +14,8 @@ import { useLocation, useParams } from "react-router";
 import CardModal from "../components/CardModal";
 import { createCard } from "../reducers/rootSlice";
 import { auth } from "../../config/firebase-config";
+import { API_URL } from "../utils/constants";
+
 
 const Roadmap = () => {
   const { _id } = useParams();
@@ -38,7 +40,7 @@ const Roadmap = () => {
 
   const fetchData = useCallback(async () => {
     const response = await axios.get(
-      `http://localhost:3000/api/user/getMap/${cUser?.uid}`
+      `${API_URL}/api/user/getMap/${cUser?.uid}`
     );
     const serverMaps = response.data.data;
 

@@ -4,35 +4,24 @@ if (process.env.NODE_ENV !== "production") {
 }
 import express, { json } from "express";
 import cors from "cors";
-import session from "express-session";
+
 import { db } from "./config/firebase-config.js";
 const PORT = 3000;
 
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173/",
+    origin: [
+      "http://localhost:5173",
+      "https://google-ai-hackathon.onrender.com",
+    ],
+    methods: ["GET", "POST"],
   })
 );
 
-const sessionOptions = {
-  name: "session",
-  secret: "newsecret",
-  resave: false,
-  saveUninitialized: false,
-  cookies: {
-    httpOnly: true,
-    secure: true,
-    expires: Date.now(),
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-  },
-};
-
 app.use(express.json());
 
-app.use(session({ ...sessionOptions }));
-
-app.get("/api/user/map/:id", async (req, res)=> {
+app.get("/api/user/map/:id", async (req, res) => {
   const { id } = req.params;
   const docRef = db.collection("roadMapList");
 
@@ -45,8 +34,7 @@ app.get("/api/user/map/:id", async (req, res)=> {
     }
   });
   return res.json({ data: userMaps });
-
-})
+});
 
 app.get("/api/user/getMap/:id", async (req, res) => {
   const { id } = req.params;
@@ -126,10 +114,9 @@ app.post("/api/user/roadmaps/:id", async (req, res) => {
     (doc) => doc.data()._id === foundCard._id
   );
 
-
   if (docToUpdate) {
     await docRef.doc(docToUpdate.id).update(foundCard);
-    
+
     return res.json({ success: true, message: "Updated", data: foundCard });
   }
   return res.json({ name: "hello" });

@@ -1,4 +1,5 @@
 import { auth } from "../../config/firebase-config";
+import { API_URL } from "./constants";
 
 export async function createResponse(result) {
   let fullResponse = "";
@@ -105,9 +106,10 @@ const init = JSON.parse(localStorage.getItem("roadmap"))
   ? JSON.parse(localStorage.getItem("roadmap"))
   : [];
 
+  console.log(API_URL)
 const fetchData = async () => {
   const res = await fetch(
-    `http://localhost:3000/api/user/getMap/${auth.currentUser?.uid}`
+    `${API_URL}/api/user/getMap/${auth.currentUser?.uid}`
   );
 
   return res.json();
