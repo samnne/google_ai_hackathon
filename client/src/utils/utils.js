@@ -188,23 +188,23 @@ export async function saveToDB(cardGraph, currentUser, globalCardList) {
       });
       data;
     }
-  } else {
-    copiedObj = [...globalCardList].map((card) => {
-      return {
-        name: card.name,
-        _id: card._id,
-        uid: currentUser?.uid || auth.currentUser?.uid,
-      };
-    });
-    console.log(copiedObj);
+  }
 
-    if (currentUser?.uid && copiedObj.length > 0) {
-      const data = await fetch(`${API_URL}/api/user/roadmaps`, {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ copiedObj: copiedObj }),
-      });
-      data;
-    }
+  copiedObj = [...globalCardList].map((card) => {
+    return {
+      name: card.name,
+      _id: card._id,
+      uid: currentUser?.uid || auth.currentUser?.uid,
+    };
+  });
+  console.log(copiedObj);
+
+  if (currentUser?.uid && copiedObj.length > 0) {
+    const data = await fetch(`${API_URL}/api/user/roadmaps`, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ copiedObj: copiedObj }),
+    });
+    console.log(await data.json());
   }
 }

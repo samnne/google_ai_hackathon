@@ -14,10 +14,10 @@ app.use(
     origin: [
       "http://localhost:5173",
       process.env.BACKEND_URL,
-      process.env.FRONTEND_URL
-
+      process.env.FRONTEND_URL,
     ],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE"],
+    credentials: true,
   })
 );
 
@@ -35,14 +35,14 @@ app.get("/api/user/map/:id", async (req, res) => {
       userMaps.push(data);
     }
   });
-   
+
   return res.json({ data: userMaps });
 });
 
 app.get("/api/user/getMap/:id", async (req, res) => {
   const { id } = req.params;
   const docRef = db.collection("roadMaps");
- 
+
   const query = await docRef.get();
   let userMaps = [];
   query.docs.map((doc) => {
@@ -54,7 +54,7 @@ app.get("/api/user/getMap/:id", async (req, res) => {
       });
     }
   });
-  
+
   return res.json({ data: userMaps });
 });
 
@@ -87,8 +87,9 @@ app.post("/api/user/createMap", async (req, res) => {
 app.post("/api/user/roadmaps", async (req, res) => {
   const { copiedObj } = req.body;
   const allMaps = [];
-
+  console.log("hey");
   const item = copiedObj[0];
+  console.log(item);
   const docRef = db.collection("roadMapList");
   const query = await docRef.where("uid", "==", item.uid).get();
 
@@ -98,6 +99,19 @@ app.post("/api/user/roadmaps", async (req, res) => {
     });
 
     return res.status(200).json({ maps: [...copiedObj] });
+  }
+
+  for (let i of copiedObj) {
+    const newQuery = await docRef.where("_id", "==", i._id).get();
+    const foundCard = copiedObj.find((card) => card._id === i._id);
+    const docToUpdate = await newQuery.docs.find(
+      (doc) => doc.data()._id === foundCard._id
+    );
+    if (docToUpdate) {
+      await docRef.doc(docToUpdate.id).update(foundCard);
+
+      return res.json({ success: true, message: "Updated", data: foundCard });
+    }
   }
 
   return res
@@ -126,9 +140,32 @@ app.post("/api/user/roadmaps/:id", async (req, res) => {
   return res.json({ name: "hello" });
 });
 
-app.all(/(.*)/, (req, res)=> {
-  res.json({false: "false"})
-})
+app.delete("/api/user/roadmap/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const docRef = db.collection("roadMapList");
+  const query = await docRef.where("_id", "==", id).get();
+  if (!query.empty) {
+    query.docs.forEach((doc) => {
+      docRef.doc(doc.id).delete();
+    });
+    return res.status(200).json({success: true})
+  }
+  const docRefTwo = db.collection("roadMaps");
+  const queryTwo = await docRefTwo.where("_id", "==", id).get();
+  if (!queryTwo.empty) {
+    queryTwo.docs.forEach((doc) => {
+      docRefTwo.doc(doc.id).delete();
+    });
+    
+    return res.status(200).json({success: true})
+  }
+  return res.json({ name: "Failed" });
+});
+
+app.all(/(.*)/, (req, res) => {
+  res.json({ false: "false" });
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

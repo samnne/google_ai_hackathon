@@ -11,6 +11,7 @@ import { createCard } from "../reducers/rootSlice";
 import { initalName, saveAllRM, saveToDB } from "../utils/utils";
 import { auth } from "../../config/firebase-config";
 import { API_URL } from "../utils/constants";
+import axios from "axios";
 
 const Roadmaps = () => {
   const globalCardList = useSelector((state) => state.cardList.value);
@@ -91,12 +92,12 @@ const Roadmaps = () => {
     });
 
     if (cUser?.uid && copiedObj.length > 0) {
-      const data = await fetch(`${API_URL}/${findMap?._id}`, {
+      const data = await fetch(`${API_URL}/api/user/roadmaps/${findMap?._id}`, {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ copiedObj: copiedObj }),
       });
-      data;
+      console.log(await data.json());
     }
 
     setEdit((prev) => !prev);
@@ -109,6 +110,9 @@ const Roadmaps = () => {
     dispatch(createCard(roadMap));
     dispatch(updateList(roadmapList));
     saveAllRM("DELETE", roadmapList, roadMap);
+
+    const response = axios.delete(`${API_URL}/api/user/roadmap/${id}`);
+    console.log(response.data);
   }
 
   return (
