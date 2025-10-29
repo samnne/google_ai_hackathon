@@ -1,16 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { initialFormData } from "../utils/constants";
-import { displayModal } from "../utils/utils";
+import { closeModal, displayModal, saveAllRM } from "../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { updateList } from "../reducers/cardListSlice";
+import { createCard } from "../reducers/rootSlice";
 
-const RoadMapModal = ({ showModal}) => {
+const RoadMapModal = ({ showModal }) => {
   const [formData, setFormData] = useState(initialFormData);
   const modalRef = useRef();
   const overlayRef = useRef();
 
   const dispatch = useDispatch();
   const copiedModal = { ...showModal };
+  
+  const rootCard = useSelector((state) => state.rootCard.value);
   const globalCardList = useSelector((state) => state.cardList.value);
   useEffect(() => {
     if (
@@ -23,7 +26,6 @@ const RoadMapModal = ({ showModal}) => {
     }
   });
 
- 
   const handleChange = (e) => {
     setFormData((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
@@ -45,8 +47,9 @@ const RoadMapModal = ({ showModal}) => {
         },
       ])
     );
-   
-    displayModal(overlayRef, modalRef);
+
+    
+    closeModal(overlayRef, modalRef);
   };
 
   const viewCard = (e) => {
@@ -54,7 +57,7 @@ const RoadMapModal = ({ showModal}) => {
 
     displayModal(overlayRef, modalRef);
   };
-  
+
   return (
     <div className="p-5 font-noto ">
       <div
@@ -65,7 +68,10 @@ const RoadMapModal = ({ showModal}) => {
           <div className="absolute flex justify-center text-center items-center right-2 top-1">
             <a
               className="text-sm  px-2 h-fit justify-self-center items-center  rounded-2xl  bg-blue-500 cursor-pointer"
-              onClick={viewCard}
+              onClick={(e) => {
+                e.preventDefault();
+                closeModal(overlayRef, modalRef);
+              }}
             >
               x
             </a>
@@ -105,7 +111,6 @@ const RoadMapModal = ({ showModal}) => {
       <div
         ref={overlayRef}
         className="overlay h-full transition-all duration-150 opacity-0 absolute inset-0 bg-black -z-10"
-        onClick={viewCard}
       ></div>
     </div>
   );

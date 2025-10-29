@@ -1,5 +1,5 @@
 
-import { displayModal } from "../utils/utils";
+import { closeModal, displayModal } from "../utils/utils";
 
 const CardModal = ({ setState, cardData, modalRef, overlayRef }) => {
 
@@ -22,7 +22,10 @@ const CardModal = ({ setState, cardData, modalRef, overlayRef }) => {
           <div className="absolute flex justify-center text-center items-center right-2 top-1">
             <button
               className="text-sm  px-2 h-fit justify-self-center items-center  rounded-2xl  bg-blue-500 cursor-pointer"
-              onClick={viewCard}
+              onClick={(e) => {
+                e.preventDefault()
+                closeModal(overlayRef, modalRef);
+              }}
             >
               x
             </button>

@@ -21,46 +21,30 @@ const Roadmaps = () => {
   const [edit, setEdit] = useState(false);
   const [mapName, setMapName] = useState({});
 
-
   const fetchData = useCallback(async () => {
-    const response = await fetch(
-      `${API_URL}/api/user/map/${cUser?.uid}`,
-      { method: "get" }
-    );
+    const response = await fetch(`${API_URL}/api/user/map/${cUser?.uid}`, {
+      method: "get",
+    });
     const data = await response.json();
     return data;
   }, []);
 
   useEffect(() => {
-    if (globalCardList.length > 0) {
-      dispatch(updateList([...globalCardList]));
-    }
+    
 
-    const init = JSON.parse(localStorage.getItem("roadmaps"))
-      ? JSON.parse(localStorage.getItem("roadmaps"))
-      : [];
-
-    const initalValueFromLs = init?.filter((card) => {
-      const {uid} = card;
-      if (!uid){
-      
-        return card;
-      } 
-      return;
-    });
-
-
-    fetchData().then((data) => {
-
-      if (data.data.length > 0) {
-        dispatch(updateList([...data.data]));
-      } else {
-        dispatch(updateList([...initalValueFromLs]));
-      }
-    });
-
+ 
     const newName = globalCardList.find((obj) => obj.name === initalName);
     setNewMap(newName);
+    console.log("newMap", globalCardList)
+    if (!newName) {
+     
+      fetchData().then((data) => {
+        console.log(data.data)
+        if (data.data.length > 0) {
+          dispatch(updateList([...data.data]));
+        }
+      });
+    }
   }, []);
 
   async function saveRoadMap() {
@@ -84,9 +68,8 @@ const Roadmaps = () => {
     });
   }
   function getRoadmapData(e, id) {
-  
     const findMap = globalCardList.find((map) => map._id === id);
-  
+
     setMapName(findMap);
     setEdit(true);
   }
@@ -108,14 +91,11 @@ const Roadmaps = () => {
     });
 
     if (cUser?.uid && copiedObj.length > 0) {
-      const data = await fetch(
-        `${API_URL}/${findMap?._id}`,
-        {
-          method: "post",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ copiedObj: copiedObj }),
-        }
-      );
+      const data = await fetch(`${API_URL}/${findMap?._id}`, {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ copiedObj: copiedObj }),
+      });
       data;
     }
 
@@ -170,8 +150,7 @@ const Roadmaps = () => {
                         to={`/roadmap/${r._id}`}
                         className=" p-2 rounded-2xl z-10 dark:text-gray-200 font-bold text-4xl cursor-pointer transition-all duration-300"
                       >
-                        G
-                        {r.name}
+                        G{r.name}
                       </Link>
                       <button
                         onClick={(e) => getRoadmapData(e, r._id)}

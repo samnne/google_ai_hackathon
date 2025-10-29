@@ -35,13 +35,14 @@ app.get("/api/user/map/:id", async (req, res) => {
       userMaps.push(data);
     }
   });
+   
   return res.json({ data: userMaps });
 });
 
 app.get("/api/user/getMap/:id", async (req, res) => {
   const { id } = req.params;
   const docRef = db.collection("roadMaps");
-
+ 
   const query = await docRef.get();
   let userMaps = [];
   query.docs.map((doc) => {
@@ -53,6 +54,7 @@ app.get("/api/user/getMap/:id", async (req, res) => {
       });
     }
   });
+  
   return res.json({ data: userMaps });
 });
 
@@ -123,6 +125,10 @@ app.post("/api/user/roadmaps/:id", async (req, res) => {
   }
   return res.json({ name: "hello" });
 });
+
+app.all(/(.*)/, (req, res)=> {
+  res.json({false: "false"})
+})
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { initialState } from "../utils/utils";
 
 
 export const rootSlice = createSlice({
   name: "rootCard",
   initialState: {
-    value: [],
+    value: [...initialState],
   },
   reducers: {
     createCard: (state, action) => {

@@ -49,6 +49,26 @@ export async function createResponse(result) {
   return fullResponse;
 }
 
+export function closeModal(oRef, mRef) {
+  const overlay = oRef.current;
+  const modal = mRef.current;
+  if (
+    overlay.classList.contains("opacity-20") &&
+    overlay.classList.contains("z-10")
+  ) {
+    overlay.classList.replace("opacity-20", "opacity-0");
+    overlay.classList.replace("z-10", "-z-10");
+  }
+  if (
+    modal.classList.contains("opacity-100") &&
+    modal.classList.contains("z-30")
+  ) {
+    modal.classList.replace("opacity-100", "opacity-0");
+    modal.classList.replace("z-30", "-z-10");
+    modal.classList.replace("translate-y-25", "translate-y-0");
+  }
+}
+
 export function displayModal(oRef, mRef) {
   const overlay = oRef.current;
   const modal = mRef.current;
@@ -59,10 +79,6 @@ export function displayModal(oRef, mRef) {
     modal.classList.replace("opacity-0", "opacity-100");
     modal.classList.replace("-z-10", "z-30");
     modal.classList.replace("translate-y-0", "translate-y-25");
-  } else {
-    modal.classList.replace("opacity-100", "opacity-0");
-    modal.classList.replace("z-30", "-z-10");
-    modal.classList.replace("translate-y-25", "translate-y-0");
   }
   if (
     overlay.classList.contains("opacity-0") &&
@@ -70,9 +86,6 @@ export function displayModal(oRef, mRef) {
   ) {
     overlay.classList.replace("opacity-0", "opacity-20");
     overlay.classList.replace("-z-10", "z-10");
-  } else {
-    overlay.classList.replace("opacity-20", "opacity-0");
-    overlay.classList.replace("z-10", "-z-10");
   }
 }
 
@@ -109,19 +122,21 @@ const init = JSON.parse(localStorage.getItem("roadmap"))
 console.log(API_URL);
 const fetchData = async () => {
   try {
+    console.log(API_URL);
     const res = await fetch(
       `${API_URL}/api/user/getMap/${auth.currentUser?.uid}`
     );
 
     return res.json();
   } catch (e) {
-    return {data: []};
+    return { data: [] };
   }
 };
 
 const transformRoadmap = (roadmap) => {
   if (roadmap.nodesMap) {
     const { nodesMap, _id, uid } = roadmap;
+    console.log(nodesMap);
     return {
       _id,
       uid,
@@ -131,19 +146,25 @@ const transformRoadmap = (roadmap) => {
 
   return roadmap;
 };
+const initList = JSON.parse(localStorage.getItem("roadmaps"))
+  ? JSON.parse(localStorage.getItem("roadmaps"))
+  : [];
+console.log(initList);
+if (auth.currentUser) {
+  const data = await fetchData().then((data) => {
+    return data.data.map((roadmap) => transformRoadmap(roadmap));
+  });
+}
 
-const data = await fetchData().then((data) => {
-  return data.data.map((roadmap) => transformRoadmap(roadmap));
-});
-
-export const initialState = init.length > data.length ? init : data;
+export const initialState = init;
+export const initialStateList = initList;
 
 export const initalName = "new";
 
 export async function saveToDB(cardGraph, currentUser, globalCardList) {
   let copiedObj = {
-    _id: cardGraph._id,
-    uid: currentUser?.uid || cardGraph.uid,
+    _id: cardGraph?._id,
+    uid: currentUser?.uid || cardGraph?.uid,
     nodesMap: {},
   };
   if (cardGraph) {

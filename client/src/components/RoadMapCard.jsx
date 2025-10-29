@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import { FaArrowsAlt } from "react-icons/fa";
+import { displayModal } from "../utils/utils";
 const RoadMapCard = ({
   createCard,
   cardGraph,
@@ -114,7 +115,10 @@ const RoadMapCard = ({
         <div className="flex gap-2 ">
           <a
             type=""
-            onClick={() => viewCard(cardGraph[taskName])}
+            onClick={(e) =>{
+              e.preventDefault()
+              viewCard(cardGraph[taskName])
+            }}
             className="view-button shadow-lg"
           >
             View

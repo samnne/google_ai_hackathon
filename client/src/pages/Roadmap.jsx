@@ -43,10 +43,13 @@ const Roadmap = () => {
       `${API_URL}/api/user/getMap/${cUser?.uid}`
     );
     const serverMaps = response.data.data;
-
+    dispatch(
+      createCard([...serverMaps])
+    )
+    console.log(rootCard, "88")
     const currentMap = serverMaps.find((map) => map._id === _id);
-    console.log(serverMaps);
-
+ 
+    console.log(currentMap, "131")
     if (currentMap && currentMap.nodesMap) {
       const transformed = {
         _id: currentMap._id,
@@ -66,20 +69,9 @@ const Roadmap = () => {
   useEffect(() => {
     document.title = "Roadmap - Google AI";
 
-    const init = JSON.parse(localStorage.getItem("roadmap"))
-      ? JSON.parse(localStorage.getItem("roadmap"))
-      : [];
-
-    const initalValueFromLs = init?.filter((card) => {
-      const { uid } = card;
-      if (!uid) {
-        console.log(card);
-        return card;
-      }
-      return;
-    });
-    console.log(initalValueFromLs);
-    dispatch(createCard([...initalValueFromLs]));
+    
+    
+   
     const validCard = rootCard.find((card) => card._id === _id);
 
     if (!validCard) {
@@ -202,7 +194,7 @@ const Roadmap = () => {
       createCard
     );
     localStorage.setItem("roadmap", JSON.stringify(newArray));
-
+  
     saveToDB(cardGraph, auth.currentUser, globalCardList);
   }
 

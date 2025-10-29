@@ -31,5 +31,5 @@ api/
 *.env 
 
 
-server/config/hackathongai-firebase-adminsdk-fbsvc-c23b9c4716.json
+server/config/hackathon.json
 .vercel

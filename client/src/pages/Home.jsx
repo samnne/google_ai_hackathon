@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { changeValue } from "../reducers/promptSlice";
 import { client, schema } from "../api/apiClient";
-import { createResponse, initalName } from "../utils/utils";
+import { createResponse, initalName, saveAllRM } from "../utils/utils";
 import { createCard } from "../reducers/rootSlice";
 import { updateList } from "../reducers/cardListSlice";
 import { v4 as uuid } from "uuid";
@@ -20,19 +20,16 @@ const Home = () => {
     document.title = "Home - Google AI";
 
     const serializableUser = {
-        uid: auth.currentUser?.uid, 
-        email: auth.currentUser?.email,
-        displayName: auth.currentUser?.displayName,
-        photoURL: auth.currentUser?.photoURL,
-        emailVerified: auth.currentUser?.emailVerified,
-      };
-      if(auth.currentUser){
-
-        dispatch(setUser(serializableUser))
-      }
+      uid: auth.currentUser?.uid,
+      email: auth.currentUser?.email,
+      displayName: auth.currentUser?.displayName,
+      photoURL: auth.currentUser?.photoURL,
+      emailVerified: auth.currentUser?.emailVerified,
+    };
+    if (auth.currentUser) {
+      dispatch(setUser(serializableUser));
+    }
   }, []);
-
-  
 
   async function initialPrompt(event) {
     event.preventDefault();
@@ -71,6 +68,7 @@ const Home = () => {
         ])
       );
 
+      
 
       navigate("/roadmap");
     } catch (error) {
@@ -80,7 +78,7 @@ const Home = () => {
       setLoading(false);
     }
   }
- 
+
   function inputChange(newValue) {
     dispatch(changeValue(newValue));
   }

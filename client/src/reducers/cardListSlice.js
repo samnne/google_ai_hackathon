@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { initialStateList } from "../utils/utils";
 
 
 export const cardListSlice = createSlice({
   name: "cardList",
   initialState: {
     value: [
-      
+      ...initialStateList
     ],
   },
   reducers: {
