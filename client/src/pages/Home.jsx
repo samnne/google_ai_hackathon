@@ -18,7 +18,10 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     document.title = "Home - Google AI";
-
+    if(!auth.currentUser){
+      navigate("/profile");
+      return;
+    }
     const serializableUser = {
       uid: auth.currentUser?.uid,
       email: auth.currentUser?.email,

@@ -156,8 +156,8 @@ if (auth.currentUser) {
   });
 }
 
-export const initialState = init;
-export const initialStateList = initList;
+export const initialState = [];
+export const initialStateList = [];
 
 export const initalName = "new";
 

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,7 +20,7 @@ const Roadmaps = () => {
   const [newMap, setNewMap] = useState({});
   const [edit, setEdit] = useState(false);
   const [mapName, setMapName] = useState({});
-
+  const navigate = useNavigate();
   const fetchData = useCallback(async () => {
     const response = await fetch(`${API_URL}/api/user/map/${cUser?.uid}`, {
       method: "get",
@@ -30,35 +30,35 @@ const Roadmaps = () => {
   }, []);
 
   useEffect(() => {
-    
+    if (!cUser) {
+      navigate("/profile");
+      return;
+    }
 
- 
     const newName = globalCardList.find((obj) => obj.name === initalName);
     setNewMap(newName);
-    console.log("newMap", globalCardList)
+    console.log("newMap", globalCardList);
     if (!newName) {
-     
       fetchData().then((data) => {
-        console.log(data.data)
-        if (data.data.length > 0) {
-          dispatch(updateList([...data.data]));
-        }
+        console.log(data.data);
+
+        dispatch(updateList([...data.data]));
       });
     }
   }, []);
 
   async function saveRoadMap() {
-    for (let i = 0; i < globalCardList.length; i++) {
-      saveAllRM(
-        "UPDATE",
-        globalCardList,
-        rootCard,
-        rootCard.find((card) => card._id === globalCardList[i]._id),
-        globalCardList[i]._id,
-        dispatch,
-        createCard
-      );
-    }
+    // for (let i = 0; i < globalCardList.length; i++) {
+    //   saveAllRM(
+    //     "UPDATE",
+    //     globalCardList,
+    //     rootCard,
+    //     rootCard.find((card) => card._id === globalCardList[i]._id),
+    //     globalCardList[i]._id,
+    //     dispatch,
+    //     createCard
+    //   );
+    // }
     saveToDB(null, auth.currentUser, globalCardList);
   }
 

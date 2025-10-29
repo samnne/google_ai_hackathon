@@ -10,12 +10,11 @@ import {
   saveAllRM,
   saveToDB,
 } from "../utils/utils";
-import { useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import CardModal from "../components/CardModal";
 import { createCard } from "../reducers/rootSlice";
 import { auth } from "../../config/firebase-config";
 import { API_URL } from "../utils/constants";
-
 
 const Roadmap = () => {
   const { _id } = useParams();
@@ -26,7 +25,7 @@ const Roadmap = () => {
   const globalCardList = useSelector((state) => state.cardList.value);
   const cUser = useSelector((state) => state.curUser.value);
   const [cardGraph, setCardGraph] = useState({});
-
+  const navigate = useNavigate();
   const [widgets, setWidgets] = useState([]);
   const [serverData, setServerData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -43,13 +42,11 @@ const Roadmap = () => {
       `${API_URL}/api/user/getMap/${cUser?.uid}`
     );
     const serverMaps = response.data.data;
-    dispatch(
-      createCard([...serverMaps])
-    )
-    console.log(rootCard, "88")
+    dispatch(createCard([...serverMaps]));
+
     const currentMap = serverMaps.find((map) => map._id === _id);
- 
-    console.log(currentMap, "131")
+
+    console.log(currentMap, "131");
     if (currentMap && currentMap.nodesMap) {
       const transformed = {
         _id: currentMap._id,
@@ -57,21 +54,21 @@ const Roadmap = () => {
         ...currentMap.nodesMap,
       };
 
+
       setCardGraph(transformed);
       setWidgets(Object.keys(currentMap.nodesMap));
     }
   }, [_id, cUser?.uid]);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  useEffect(() => {
     document.title = "Roadmap - Google AI";
 
-    
-    
-   
+    if (!auth.currentUser) {
+      navigate("/profile");
+      return;
+    }
+  
+    fetchData();
     const validCard = rootCard.find((card) => card._id === _id);
 
     if (!validCard) {
@@ -83,7 +80,7 @@ const Roadmap = () => {
     if (validCard.nodesMap) {
       cardData = {
         _id: validCard._id,
-        
+
         ...validCard.nodesMap,
       };
     } else {
@@ -97,9 +94,7 @@ const Roadmap = () => {
     );
 
     setWidgets(nodeKeys);
-  }, [document.title]);
-
-
+  }, [document.title, fetchData]);
 
   async function graphInsert(parent) {
     let fullResponse = "";
@@ -126,7 +121,7 @@ const Roadmap = () => {
         console.log(newNode);
 
         const step = Object.keys(newNode);
-     
+
         newNode[step].id = prev[parent].id + 1;
         newNode[step].nei = [];
         newNode[step].position = {
@@ -184,17 +179,17 @@ const Roadmap = () => {
 
     dispatch(createCard(newArray));
 
-    saveAllRM(
-      "UPDATE",
-      globalCardList,
-      rootCard,
-      cardGraph,
-      _id,
-      dispatch,
-      createCard
-    );
-    localStorage.setItem("roadmap", JSON.stringify(newArray));
-  
+    // saveAllRM(
+    //   "UPDATE",
+    //   globalCardList,
+    //   rootCard,
+    //   cardGraph,
+    //   _id,
+    //   dispatch,
+    //   createCard
+    // );
+    // localStorage.setItem("roadmap", JSON.stringify(newArray));
+
     saveToDB(cardGraph, auth.currentUser, globalCardList);
   }
 
@@ -215,21 +210,19 @@ const Roadmap = () => {
         <div className="flex max-sm:justify-center max-sm:px-4 flex-wrap gap-4 relative ">
           {widgets.map((key) => {
             return (
-             
-                <RoadMapCard
-                  key={key}
-                  taskName={key}
-                  createCard={graphInsert}
-                  cardGraph={cardGraph}
-                  position={cardGraph[key]?.position}
-                  viewCard={viewCard}
-                  id={cardGraph[key]?.id}
-                  loading={loading}
-                  onUpdate={updateWidget}
-                  isSelected={selectedWidget === cardGraph[key]?.id}
-                  onSelect={setSelectedWidget}
-                />
-              
+              <RoadMapCard
+                key={key}
+                taskName={key}
+                createCard={graphInsert}
+                cardGraph={cardGraph}
+                position={cardGraph[key]?.position}
+                viewCard={viewCard}
+                id={cardGraph[key]?.id}
+                loading={loading}
+                onUpdate={updateWidget}
+                isSelected={selectedWidget === cardGraph[key]?.id}
+                onSelect={setSelectedWidget}
+              />
             );
           })}
         </div>
