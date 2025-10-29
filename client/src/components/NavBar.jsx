@@ -12,7 +12,7 @@ import { createCard } from "../reducers/rootSlice";
 const logo = {
   id: "Home",
   title: "Home",
-  link: "/google_ai_hackathon/",
+  link: "/home",
   image: "./uPathLogo.png",
 };
 
@@ -20,8 +20,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const cUser = useSelector((state) => state.curUser.value);
   const dispatch = useDispatch();
-  console.log(cUser);
-
+  
   async function handleLogOut() {
     await signOut(auth)
       .then(() => {
@@ -29,7 +28,7 @@ const NavBar = () => {
         dispatch(setUser(null));
         dispatch(updateList([]));
         dispatch(createCard([]));
-        navigate("/google_ai_hackathon/profile");
+        navigate("/profile");
       })
       .catch((e) => {
         console.log("FAIL SIGN", e);
@@ -40,12 +39,12 @@ const NavBar = () => {
       <div className="sm:text-2xl  gap-1 text-xl p-2 font-bold dark:bg-gray-900 dark:text-yellow-500 bg-white text-black z-20 rounded-full shadow-lg dark:shadow-gray-800 h-20 w-full flex max-sm:justify-center  justify-between items-center">
         <div className="flex gap-1">
           <div className="flex justify-center items-center pl-4">
-            <a
+            <Link
               className="sm:px-5 flex  items-center justify-center   px-1  dark:hover:bg-gray-600  hover:bg-gray-200 z-20 rounded-full transition-all duration-100"
               id={logo.id}
-              href={logo.link}>
+              to={logo.link}>
               <img src={logo.image} className=" sm:w-20 sm:h-10 w-15 scale-75" alt="" />
-            </a>
+            </Link>
           </div>
 
           {navLinks.map((link) => {

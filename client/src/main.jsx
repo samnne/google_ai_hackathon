@@ -15,13 +15,13 @@ import Roadmaps from "./pages/Roadmaps.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/google_ai_hackathon">
         <NavBar></NavBar>
         <Routes>
-          <Route path="/google_ai_hackathon/" element={<Home />} />
-          <Route path="/google_ai_hackathon/profile" element={<Profile />} />
-          <Route path="/google_ai_hackathon/roadmap" element={<Roadmaps />} />
-          <Route path="/google_ai_hackathon/roadmap/:_id" element={<Roadmap />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/roadmap" element={<Roadmaps />} />
+          <Route path="/roadmap/:_id" element={<Roadmap />} />
         </Routes>
       </BrowserRouter>
     </Provider>

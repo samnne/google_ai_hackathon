@@ -45,7 +45,7 @@ const RoadMapModal = ({ showModal}) => {
         },
       ])
     );
-    console.log(newList);
+   
     displayModal(overlayRef, modalRef);
   };
 
@@ -54,8 +54,7 @@ const RoadMapModal = ({ showModal}) => {
 
     displayModal(overlayRef, modalRef);
   };
-  console.log(copiedModal);
-
+  
   return (
     <div className="p-5 font-noto ">
       <div

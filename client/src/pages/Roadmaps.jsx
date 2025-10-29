@@ -167,7 +167,7 @@ const Roadmaps = () => {
                   ) : (
                     <div className="group hover:scale-110 transform transition-all">
                       <Link
-                        to={`/google_ai_hackathon/roadmap/${r._id}`}
+                        to={`/roadmap/${r._id}`}
                         className=" p-2 rounded-2xl z-10 dark:text-gray-200 font-bold text-4xl cursor-pointer transition-all duration-300"
                       >
                         G
@@ -184,7 +184,7 @@ const Roadmaps = () => {
                 ) : (
                   <div className="group hover:scale-110 transform transition-all">
                     <Link
-                      to={`/google_ai_hackathon/roadmap/${r._id}`}
+                      to={`/roadmap/${r._id}`}
                       className=" p-2 rounded-2xl  z-10 dark:text-gray-200 font-bold text-4xl cursor-pointer transition-all duration-300"
                     >
                       {r.name}

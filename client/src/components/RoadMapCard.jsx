@@ -26,8 +26,7 @@ const RoadMapCard = ({
     setIsDragging(true);
 
     const rect = elem.getBoundingClientRect();
-    console.log(rect.x, rect.y);
-    console.log(e.pageX, e.clientY);
+   
     setDragOffset({
       x: e.pageX - (rect.left + window.scrollX),
       y: e.pageY - (rect.top + window.scrollY) + 200,
@@ -44,7 +43,7 @@ const RoadMapCard = ({
         y: e.pageY - dragOffset.y,
       };
 
-      console.log(newPosition);
+    
       onUpdate(id, { position: newPosition });
     },
     [isDragging, dragOffset, id, onUpdate]

@@ -72,7 +72,7 @@ const Home = () => {
       );
 
 
-      navigate("/google_ai_hackathon/roadmap");
+      navigate("/roadmap");
     } catch (error) {
       console.log(error);
       setLoading(false);

@@ -1,5 +1,3 @@
-
-
 export const schema = () => {
   return {
     type: "object",
@@ -61,7 +59,7 @@ export class AIClient {
       const availability = await LanguageModel.availability();
 
       if (availability === "unavailable") {
-        console.warn("⚠️ Language model unavailable on this device.");
+        console.warn("Language model unavailable on this device.");
         this.available = false;
         return;
       }
@@ -82,16 +80,16 @@ export class AIClient {
       });
 
       this.available = true;
-      console.log("✅ AIClient initialized successfully.");
+      console.log("AIClient initialized successfully.");
     } catch (error) {
-      console.error("❌ Failed to initialize AIClient:", error);
+      console.error("Failed to initialize AIClient:", error);
       this.available = false;
     }
   }
 
   async prompt(text) {
     if (!this.available || !this.session) {
-      console.warn("⚠️ AIClient unavailable — returning fallback response.");
+      console.warn("AIClient unavailable");
       return { error: "AIClient unavailable", result: null };
     }
 
@@ -104,9 +102,30 @@ export class AIClient {
       });
       return result;
     } catch (error) {
-      console.error("⚠️ AIClient prompt error:", error);
+      console.error("AIClient prompt error:", error);
       return { error: "AIClient prompt failed", result: null };
     }
+  }
+  async promptStreaming(text) {
+    if (!this.session) {
+      await this.init();
+    }
+
+    const stream = this.session.promptStreaming(
+      [
+        {
+          role: "user",
+          content: [{ type: "text", value: text }],
+        },
+      ],
+      {
+        responseConstraint: schema(),
+        omitResponseConstraintInput: true,
+        output: { language: this.language },
+      }
+    );
+
+    return stream;
   }
 
   destroy() {
@@ -118,15 +137,11 @@ export class AIClient {
   }
 }
 
-
 const client = new AIClient("en");
 try {
   await client.init();
   //console.log(JSON.parse(res), "######################");
 } catch (e) {
   console.log(e);
-  
 }
 export { client };
-
-

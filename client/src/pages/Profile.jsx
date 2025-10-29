@@ -2,7 +2,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
-
   updateProfile,
 } from "firebase/auth";
 import React, { useEffect, useState } from "react";
@@ -26,7 +25,6 @@ const SignUp = ({ profilePage }) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-
 
   const signUp = async (e) => {
     e.preventDefault();
@@ -262,7 +260,7 @@ const SignIn = ({ profilePage }) => {
 
 const Profile = () => {
   const globalCardList = useSelector((state) => state.cardList.value);
-  const [changePage, setSignInSignUp] = useState("up");
+  //const [changePage, setSignInSignUp] = useState("up");
   const dispatch = useDispatch();
   const cUser = useSelector((state) => state.curUser.value);
 
@@ -293,7 +291,7 @@ const Profile = () => {
       dispatch(setUser(serializableUser));
     }
   };
-  console.log(cUser);
+  
   return (
     <>
       <main
@@ -348,13 +346,11 @@ const Profile = () => {
               </div>
             </section>
           </section>
-        ) : changePage === "up" ? (
-          <SignUp profilePage={handleAuthSuccess} />
         ) : (
           <SignIn profilePage={handleAuthSuccess} />
         )}
 
-        {showProfile ? (
+        {/* {showProfile ? (
           <></>
         ) : (
           <div className="flex ">
@@ -367,7 +363,7 @@ const Profile = () => {
               {changePage === "up" ? "Sign In" : "Sign Up"}
             </button>
           </div>
-        )}
+        )} */}
       </main>
     </>
   );
