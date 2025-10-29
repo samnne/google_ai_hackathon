@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./css/index.css";
 
 import NavBar from "./components/NavBar.jsx";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import Home from "./pages/Home.jsx";
 import Profile from "./pages/Profile.jsx";
 import Roadmap from "./pages/Roadmap.jsx";
@@ -18,6 +18,7 @@ createRoot(document.getElementById("root")).render(
       <BrowserRouter basename="/google_ai_hackathon">
         <NavBar></NavBar>
         <Routes>
+          <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/roadmap" element={<Roadmaps />} />
