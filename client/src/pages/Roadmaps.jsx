@@ -49,13 +49,18 @@ const Roadmaps = () => {
         }
 
         for (let item of globalCardList) {
+          let found = false;
           for (let newItem of onlyDups) {
             if (item._id === newItem._id) {
+              found = true;
               break;
             }
-            onlyDups.push(item);
           }
+          if (found) continue;
+          onlyDups.push(item);
         }
+        console.log(onlyDups, "onlyDups")
+        console.log(globalCardList, "cardList")
         
         dispatch(updateList([...onlyDups]));
       });

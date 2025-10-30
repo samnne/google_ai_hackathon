@@ -113,6 +113,7 @@ app.post("/api/user/roadmaps", async (req, res) => {
       return res.json({ success: true, message: "Updated", data: foundCard });
     } else {
       await docRef.add(foundCard);
+      console.log("heyyyys")
       return res.json({ success: true, message: "Updated", data: foundCard });
     }
   }
