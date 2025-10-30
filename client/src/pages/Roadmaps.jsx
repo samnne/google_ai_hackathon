@@ -43,7 +43,21 @@ const Roadmaps = () => {
       fetchData().then((data) => {
         console.log(data.data);
 
-        dispatch(updateList([...data.data]));
+        const onlyDups = [];
+        for (let item of data.data) {
+          onlyDups.push(item);
+        }
+
+        for (let item of globalCardList) {
+          for (let newItem of onlyDups) {
+            if (item._id === newItem._id) {
+              break;
+            }
+            onlyDups.push(item);
+          }
+        }
+        
+        dispatch(updateList([...onlyDups]));
       });
     }
   }, []);

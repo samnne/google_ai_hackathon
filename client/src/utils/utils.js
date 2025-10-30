@@ -186,7 +186,7 @@ export async function saveToDB(cardGraph, currentUser, globalCardList) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ copiedObj }),
       });
-      data;
+      console.log(data);
     }
   }
 

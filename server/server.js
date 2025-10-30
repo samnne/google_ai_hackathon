@@ -111,6 +111,9 @@ app.post("/api/user/roadmaps", async (req, res) => {
       await docRef.doc(docToUpdate.id).update(foundCard);
 
       return res.json({ success: true, message: "Updated", data: foundCard });
+    } else {
+      await docRef.add(foundCard);
+      return res.json({ success: true, message: "Updated", data: foundCard });
     }
   }
 
@@ -149,7 +152,7 @@ app.delete("/api/user/roadmap/:id", async (req, res) => {
     query.docs.forEach((doc) => {
       docRef.doc(doc.id).delete();
     });
-    return res.status(200).json({success: true})
+    return res.status(200).json({ success: true });
   }
   const docRefTwo = db.collection("roadMaps");
   const queryTwo = await docRefTwo.where("_id", "==", id).get();
@@ -157,8 +160,8 @@ app.delete("/api/user/roadmap/:id", async (req, res) => {
     queryTwo.docs.forEach((doc) => {
       docRefTwo.doc(doc.id).delete();
     });
-    
-    return res.status(200).json({success: true})
+
+    return res.status(200).json({ success: true });
   }
   return res.json({ name: "Failed" });
 });
