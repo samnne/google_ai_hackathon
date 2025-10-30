@@ -110,17 +110,18 @@ app.post("/api/user/roadmaps", async (req, res) => {
     if (docToUpdate) {
       await docRef.doc(docToUpdate.id).update(foundCard);
 
-      return res.json({ success: true, message: "Updated", data: foundCard });
+     
     } else {
       await docRef.add(foundCard);
-      console.log("heyyyys")
-      return res.json({ success: true, message: "Updated", data: foundCard });
+      
     }
+   
   }
 
+
   return res
-    .status(404)
-    .json({ success: false, message: "Document not found" });
+    .status(200)
+    .json({ success: true, message: "Found" });
 });
 
 app.post("/api/user/roadmaps/:id", async (req, res) => {
