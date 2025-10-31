@@ -15,6 +15,7 @@ import CardModal from "../components/CardModal";
 import { createCard } from "../reducers/rootSlice";
 import { auth } from "../../config/firebase-config";
 import { API_URL } from "../utils/constants";
+import { v4 as uuid } from "uuid";
 
 const Roadmap = () => {
   const { _id } = useParams();
@@ -42,9 +43,9 @@ const Roadmap = () => {
       `${API_URL}/api/user/getMap/${cUser?.uid}`
     );
     const serverMaps = response.data.data;
-    console.log(serverMaps)
+    console.log(serverMaps);
     const onlyDups = [];
-    for (let i = 0; i< serverData?.length; i++) {
+    for (let i = 0; i < serverData?.length; i++) {
       onlyDups.push(serverData.data[i]);
     }
 
@@ -131,11 +132,16 @@ const Roadmap = () => {
 
       fullResponse = await createResponse(result);
       console.log(fullResponse);
-      const newNode = JSON.parse(fullResponse);
+      let newNode = JSON.parse(fullResponse);
       setCardGraph((prev) => {
         console.log(newNode);
 
-        const step = Object.keys(newNode);
+        let step = Object.keys(newNode)[0];
+        if (widgets.includes(step)) {
+          step = uuid();
+          let newPar = { [step]: { ...Object.values(newNode)[0] } };
+          newNode = { ...newPar };
+        }
 
         newNode[step].id = prev[parent].id + 1;
         newNode[step].nei = [];
