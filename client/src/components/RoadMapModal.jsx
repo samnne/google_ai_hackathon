@@ -1,9 +1,10 @@
-import React, { use, useEffect, useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import { initialFormData } from "../utils/constants";
-import { closeModal, displayModal, saveAllRM } from "../utils/utils";
+import { closeModal, displayModal, saveToDB } from "../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { updateList } from "../reducers/cardListSlice";
-import { createCard } from "../reducers/rootSlice";
+
+import { auth } from "../../config/firebase-config";
 
 const RoadMapModal = ({ showModal }) => {
   const [formData, setFormData] = useState(initialFormData);
@@ -12,7 +13,7 @@ const RoadMapModal = ({ showModal }) => {
 
   const dispatch = useDispatch();
   const copiedModal = { ...showModal };
-  
+
   const rootCard = useSelector((state) => state.rootCard.value);
   const globalCardList = useSelector((state) => state.cardList.value);
   useEffect(() => {
@@ -48,7 +49,17 @@ const RoadMapModal = ({ showModal }) => {
       ])
     );
 
-    
+    const firstStep = rootCard.find((card) => card._id === _id);
+    saveToDB(
+      {
+        ...firstStep,
+        _id: _id,
+        uid: auth.currentUser?.uid,
+      },
+      auth.currentUser,
+      globalCardList
+    );
+
     closeModal(overlayRef, modalRef);
   };
 

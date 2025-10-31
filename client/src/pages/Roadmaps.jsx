@@ -41,8 +41,7 @@ const Roadmaps = () => {
     console.log("newMap", globalCardList);
     if (!newName) {
       fetchData().then((data) => {
-        console.log(data.data);
-
+       
         const onlyDups = [];
         for (let item of data.data) {
           onlyDups.push(item);
@@ -59,12 +58,10 @@ const Roadmaps = () => {
           if (found) continue;
           onlyDups.push(item);
         }
-        console.log(onlyDups, "onlyDups")
-        console.log(globalCardList, "cardList")
-        
+      
         dispatch(updateList([...onlyDups]));
       });
-    }
+    } 
   }, []);
 
   async function saveRoadMap() {

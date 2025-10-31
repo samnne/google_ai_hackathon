@@ -42,7 +42,23 @@ const Roadmap = () => {
       `${API_URL}/api/user/getMap/${cUser?.uid}`
     );
     const serverMaps = response.data.data;
-    dispatch(createCard([...serverMaps]));
+    const onlyDups = [];
+    for (let item of serverData) {
+      onlyDups.push(item);
+    }
+
+    for (let item of rootCard) {
+      let found = false;
+      for (let newItem of onlyDups) {
+        if (item._id === newItem._id) {
+          found = true;
+          break;
+        }
+      }
+      if (found) continue;
+      onlyDups.push(item);
+    }
+    dispatch(createCard([...onlyDups]));
 
     const currentMap = serverMaps.find((map) => map._id === _id);
 
@@ -53,7 +69,6 @@ const Roadmap = () => {
         uid: currentMap.uid,
         ...currentMap.nodesMap,
       };
-
 
       setCardGraph(transformed);
       setWidgets(Object.keys(currentMap.nodesMap));
@@ -67,7 +82,7 @@ const Roadmap = () => {
       navigate("/profile");
       return;
     }
-  
+
     fetchData();
     const validCard = rootCard.find((card) => card._id === _id);
 

@@ -67,7 +67,6 @@ app.post("/api/user/createMap", async (req, res) => {
 
   if (query.empty) {
     await docRef.add({ ...copiedObj });
-    return res.json({ success: true, message: "Created", data: copiedObj });
   }
 
   const docToUpdate = query.docs.find(
@@ -76,12 +75,9 @@ app.post("/api/user/createMap", async (req, res) => {
 
   if (docToUpdate) {
     await docRef.doc(docToUpdate.id).update({ ...copiedObj });
-    return res.json({ success: true, message: "Updated", data: copiedObj });
   }
 
-  return res
-    .status(404)
-    .json({ success: false, message: "Document not found" });
+  return res.json({ success: true, message: "Updated", data: copiedObj });
 });
 
 app.post("/api/user/roadmaps", async (req, res) => {
@@ -109,19 +105,12 @@ app.post("/api/user/roadmaps", async (req, res) => {
     );
     if (docToUpdate) {
       await docRef.doc(docToUpdate.id).update(foundCard);
-
-     
     } else {
       await docRef.add(foundCard);
-      
     }
-   
   }
 
-
-  return res
-    .status(200)
-    .json({ success: true, message: "Found" });
+  return res.status(200).json({ success: true, message: "Found" });
 });
 
 app.post("/api/user/roadmaps/:id", async (req, res) => {

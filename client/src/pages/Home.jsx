@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { changeValue } from "../reducers/promptSlice";
 import { client, schema } from "../api/apiClient";
-import { createResponse, initalName, saveAllRM } from "../utils/utils";
+import {
+  createResponse,
+  initalName,
+  saveAllRM,
+  saveToDB,
+} from "../utils/utils";
 import { createCard } from "../reducers/rootSlice";
 import { updateList } from "../reducers/cardListSlice";
 import { v4 as uuid } from "uuid";
@@ -18,7 +23,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     document.title = "Home - Google AI";
-    if(!auth.currentUser){
+    if (!auth.currentUser) {
       navigate("/profile");
       return;
     }
@@ -70,8 +75,6 @@ const Home = () => {
           },
         ])
       );
-
-      
 
       navigate("/roadmap");
     } catch (error) {
