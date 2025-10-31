@@ -350,6 +350,7 @@ const Profile = () => {
           <SignIn profilePage={handleAuthSuccess} />
         )}
 
+        {/* <SignUp profilePage={handleAuthSuccess} /> */}
         {/* {showProfile ? (
           <></>
         ) : (

@@ -168,7 +168,7 @@ const Roadmaps = () => {
                         to={`/roadmap/${r._id}`}
                         className=" p-2 rounded-2xl z-10 dark:text-gray-200 font-bold text-4xl cursor-pointer transition-all duration-300"
                       >
-                        G{r.name}
+                        {r.name}
                       </Link>
                       <button
                         onClick={(e) => getRoadmapData(e, r._id)}
