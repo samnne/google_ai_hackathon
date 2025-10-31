@@ -1,4 +1,4 @@
-import React, {  useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { initialFormData } from "../utils/constants";
 import { closeModal, displayModal, saveToDB } from "../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,7 +57,13 @@ const RoadMapModal = ({ showModal }) => {
         uid: auth.currentUser?.uid,
       },
       auth.currentUser,
-      globalCardList
+      [
+        ...newList,
+        {
+          name: formData.name,
+          _id: _id,
+        },
+      ]
     );
 
     closeModal(overlayRef, modalRef);

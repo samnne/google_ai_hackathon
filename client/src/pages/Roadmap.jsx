@@ -42,9 +42,10 @@ const Roadmap = () => {
       `${API_URL}/api/user/getMap/${cUser?.uid}`
     );
     const serverMaps = response.data.data;
+    console.log(serverMaps)
     const onlyDups = [];
-    for (let item of serverData) {
-      onlyDups.push(item);
+    for (let i = 0; i< serverData?.length; i++) {
+      onlyDups.push(serverData.data[i]);
     }
 
     for (let item of rootCard) {
@@ -95,7 +96,6 @@ const Roadmap = () => {
     if (validCard.nodesMap) {
       cardData = {
         _id: validCard._id,
-
         ...validCard.nodesMap,
       };
     } else {
