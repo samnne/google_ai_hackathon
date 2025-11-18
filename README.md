@@ -64,6 +64,11 @@ How it works
 
 ## Check it out Here
 
+ADMIN LOGIN:
+
+- email -> <admin@test.com>
+- password -> admin12345
+
 ```bash
 https://samnne.github.io/google_ai_hackathon/
 ```
