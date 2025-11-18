@@ -62,7 +62,7 @@ const Home = () => {
             ...firstStep,
             _id: sharedId,
           },
-        ])
+        ]),
       );
 
       dispatch(
@@ -73,7 +73,7 @@ const Home = () => {
             _id: sharedId,
             updated: false,
           },
-        ])
+        ]),
       );
 
       navigate("/roadmap");
@@ -98,7 +98,7 @@ const Home = () => {
       </h1>
       <form
         onSubmit={(e) => initialPrompt(e)}
-        className="dark:bg-black dark:text-white dark:shadow-gray-900 bg-white font-noto font-bold shadow-lg h-20 gap-5 rounded-3xl sm:w-96  flex items-center p-5"
+        className="glass-morph  dark:text-white dark:shadow-gray-900  font-noto font-bold h-20 gap-5 rounded-3xl sm:w-96  flex items-center p-5"
       >
         <input
           type="text"
@@ -106,12 +106,40 @@ const Home = () => {
           value={prompt}
           onChange={(e) => inputChange(e.target?.value)}
           placeholder="Start Your Journey Here."
-          className="focus:outline-0 shadow dark:bg-gray-700  bg-gray-200 ps-2 rounded-xl h-8 w-full "
+          className="focus:outline-0 shadow glass-morph dark:bg-gray-700  bg-gray-200 ps-2 rounded-xl h-8 w-full "
         />
-        <button type="submit" className="primary-button text-yellow-500">
+        <button
+          type="submit"
+          className="glass-morph rounded-xl primary-button text-yellow-500"
+        >
           Create
         </button>
       </form>
+      <div
+        style={{
+          boxShadow: "inset 0 0 8px 1px rgba(255,255,255,0.2)",
+          border: "1px solid rgba(255,255,255,0.2)",
+          background: "rgba(255,255,255,0.2)",
+          backdropFilter: "blur(2px)",
+        }}
+        className="fixed p-4 bottom-10 left-10 text-gray-100  rounded-xl text-sm font-semibold"
+      >
+        <p>Must have these chrome flags enabled.</p>
+        <ul className="p-2 transition-all duration-200 nth:p-2 font-light  text-xs list-disc flex flex-col group gap-2">
+          <a
+            href="chrome://flags/#prompt-api-for-gemini-nano-multimodal-input"
+            className="transition-all duration-200  hover:text-gray-500"
+          >
+            <li className="">Gemini Nano MultiModal Input</li>
+          </a>
+          <a
+            className="transition-all duration-200 hover:text-gray-500"
+            href="chrome://flags/#prompt-api-for-gemini-nano"
+          >
+            <li>Gemini Nano</li>
+          </a>
+        </ul>
+      </div>
     </section>
   );
 };

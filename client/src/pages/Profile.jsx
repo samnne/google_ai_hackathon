@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import { FaGoogle, FaTimes } from "react-icons/fa";
 import { auth, provider } from "../../config/firebase-config";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { setUser } from "../reducers/userSlice";
 
 const SignUp = ({ profilePage }) => {
@@ -34,7 +34,7 @@ const SignUp = ({ profilePage }) => {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
 
       await updateProfile(userCredential.user, {
@@ -167,7 +167,7 @@ const SignIn = ({ profilePage }) => {
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
 
       const serializableUser = {
@@ -261,6 +261,7 @@ const SignIn = ({ profilePage }) => {
 const Profile = () => {
   const globalCardList = useSelector((state) => state.cardList.value);
   //const [changePage, setSignInSignUp] = useState("up");
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cUser = useSelector((state) => state.curUser.value);
 
@@ -289,9 +290,10 @@ const Profile = () => {
         emailVerified: auth.currentUser.emailVerified,
       };
       dispatch(setUser(serializableUser));
+      navigate("/");
     }
   };
-  
+
   return (
     <>
       <main
@@ -340,9 +342,6 @@ const Profile = () => {
                     </span>
                   </div>
                 </header>
-                <div className="flex bg-gray-200 cursor-pointer h-full p-2 rounded-full justify-center hover:bg-gray-500 items-center">
-                  <FaTimes />
-                </div>
               </div>
             </section>
           </section>
