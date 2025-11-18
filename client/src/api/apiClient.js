@@ -57,7 +57,7 @@ export class AIClient {
   async init() {
     try {
       const availability = await LanguageModel.availability();
-
+      console.log(availability)
       if (availability === "unavailable") {
         console.warn("Language model unavailable on this device.");
         this.available = false;
