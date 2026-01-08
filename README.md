@@ -69,4 +69,7 @@ ADMIN LOGIN:
 - email -> <admin@test.com>
 - password -> admin12345
 
-[uPath](https://samnne.github.io/google_ai_hackathon/)
+**[uPath](https://samnne.github.io/google_ai_hackathon/)**
+
+# Demo Video 
+**[Click Me!]**(https://youtu.be/ya7St-rhShY?si=DsX1LHmfDvkIZixX)
